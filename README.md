@@ -8,6 +8,8 @@
 
 ### Objectives
 | Input | Output | Approach | Runtime (Local) | Runtime (GCP) |
+twitter 20m 40s 27 iterations
+
 
 Description of Algorithms
 Idea, Steps, Reason, Advantage, Guarantee of shuffling rounds, Parallel, Scalable
