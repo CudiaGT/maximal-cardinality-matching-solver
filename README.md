@@ -8,6 +8,7 @@
 
 ### Objectives
 | Input | Output | Approach | Runtime (Local) | Runtime (GCP) |
+| soc-LiveJournal1 | 17m 25m | 44 iterations |
 | twitter | 20m 40s | 27 iterations | 
 | com-orkut | 31m 41s | 38 iterations |
 
