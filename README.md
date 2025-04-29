@@ -1,7 +1,5 @@
 # Large Scale Data Processing: Final Project
-## Results
-### Harim Kim - Matching - Worked Alone
-
+### Results (Harim Kim / Matching / Worked Alone)=
 ## Deliverables
 ##
 
