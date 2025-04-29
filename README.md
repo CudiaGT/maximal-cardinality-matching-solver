@@ -8,7 +8,7 @@
 
 ### Objectives
 | Input | Output | Approach | Runtime (Local) | Runtime (GCP) |
-twitter 20m 40s 27 iterations
+| twitter | 20m 40s | 27 iterations | 
 
 
 Description of Algorithms
