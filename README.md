@@ -9,7 +9,7 @@
 ### Objectives
 | Input | Output | Approach | Runtime (Local) | Runtime (GCP) |
 | twitter | 20m 40s | 27 iterations | 
-
+| com-orkut | 31m 41s | 38 iterations |
 
 Description of Algorithms
 Idea, Steps, Reason, Advantage, Guarantee of shuffling rounds, Parallel, Scalable
