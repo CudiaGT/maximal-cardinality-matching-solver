@@ -12,7 +12,7 @@
 | soc-pokec-relationships.csv |  |  |  |  |
 | soc-LiveJournal1            |  | 17m 25m | 44 iterations |
 | twitter_original_edges      |  | 20m 40s | 27 iterations | 
-| com-orkut.ungraph.csv       |  | 31m 41s | 38 iterations |
+| com-orkut.ungraph.csv       |  | 38m 10s | 42 iterations |
 
 Description of Algorithms
 Idea, Steps, Reason, Advantage, Guarantee of shuffling rounds, Parallel, Scalable
