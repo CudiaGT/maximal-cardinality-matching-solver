@@ -1,7 +1,16 @@
 # Large Scale Data Processing: Final Project
 ## Results (Harim Kim / Matching / Worked Alone)
-### Output Files
+### Solution Files
 * www.harimkim.com
+
+| Input File Name             | Output File Name | Matching Size |
+| --------------------------- | ---------------- | ------------- |
+| log_normal_100.csv          | log_normal_100_solution.csv
+| musae_ENGB_edges.csv        |
+| soc-pokec-relationships.csv |
+| soc-LiveJournal1.csv        | 
+| twitter_original_edges.csv  |
+| com-orkut.ungraph.csv       |
 
 ***
 ### Code
