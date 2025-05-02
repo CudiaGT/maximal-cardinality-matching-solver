@@ -5,10 +5,10 @@
 
 | Input File Name             | Output File Name                     | Matching Size |
 | --------------------------- | ------------------------------------ | ------------- |
-| log_normal_100.csv          | log_normal_100_solution.csv          |  |
-| musae_ENGB_edges.csv        | musae_ENGB_edges_solution.csv        |  |
+| log_normal_100.csv          | log_normal_100_solution.csv          | 50            |
+| musae_ENGB_edges.csv        | musae_ENGB_edges_solution.csv        | 2,968         |
 | soc-pokec-relationships.csv | soc-pokec-relationships_solution.csv |  |
-| soc-LiveJournal1.csv        | soc-LiveJournal1_solution.csv        |  |
+| soc-LiveJournal1.csv        | soc-LiveJournal1_solution.csv        | 1,890,074     |
 | twitter_original_edges.csv  | twitter_original_edges_solution.csv  |  |
 | com-orkut.ungraph.csv       | com-orkut.ungraph_solution.csv       |  |
 
@@ -25,7 +25,7 @@ For small inputs (log_normal_100.csv and musae_ENGB_edges.csv), it was presumed 
 | File Name            | Matching Size | Approach         | Runtime (Local) |
 | -------------------- | ------------- | ---------------- | --------------- |
 | log_normal_100.csv   | 50            | Edmonds' Blossom | 1s              |
-| musae_ENGB_edges.csv | 2968          | Edmonds' Blossom | 1s              |
+| musae_ENGB_edges.csv | 2,968         | Edmonds' Blossom | 1s              |
 
 ***
 Matching for Large Inputs (Israeli-Itai Algorithm)
