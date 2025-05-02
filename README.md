@@ -52,14 +52,14 @@ After 2-3 repeated trials on each of the larger samples to test for robustness a
 
 As searching for augmenting paths are non-trivial, the initial approach was to fully abandon parallelization and implement an algorithm that searchs every augmenting path of a given length (n), by providing a scenario in which n edges are augmenting paths. In other words, the program was to iterate through the nodes and find a condition in which 0-1 are not matched, 1-2 are matched, 2-3 are not matched, and so on. However, through Profession Su's suggestion, it was deemed better to simultaneously search for some of the augmenting paths instead of iteratively finding all of them, as the prior algorithm had significantly faster runtime than the latter, and the advantages of finding "all" augmenting paths of length n was not beneficial enough relative to the computing power that it required.
 
-Therefore, an alternative algorithm (augmenting_path_improver.scala) was implemented, searching for augmenting paths of length 3 at parallel at each iteration, and resolving conflicts when they occur. For submission purposes, the augmenting path algorithm was run once on each large dataset once, then iterated 9 more times. For the final submission output files, the algorithm was run as much as time allowed.
+Therefore, an alternative algorithm (augmenting_path_improver.scala) was implemented, searching for augmenting paths of length 3 at parallel at each iteration, and resolving conflicts when they occur. For submission purposes, the augmenting path algorithm was run once on each large dataset once, then as much as time allowed to maximize the size of the matched set.
 
-| File Name                   | Original Matching | After 1 Iteration | After 10 Iterations | Runtime per Iteration |
-| --------------------------- | ----------------- | ----------------- | ------------------- | --------------------- |
-| soc-pokec-relationships.csv | 599,709           | 623,483           | 700,331             | 1-2 minutes           |
-| soc-LiveJournal1            | 1,578,566         | 1,692,282         | 1,890,074           | 2-4 minutes           |
-| twitter_original_edges      | 92,404            |                   |                     |                       |
-| com-orkut.ungraph.csv       | 1,339,741         |                   |                     |                       |
+| File Name                   | Original Matching | After 1 Iteration | After (n) Iterations | Runtime per Iteration |
+| --------------------------- | ----------------- | ----------------- | -------------------- | --------------------- |
+| soc-pokec-relationships.csv | 599,709           | 623,483           | 700,331 (10)         | 1-2 minutes           |
+| soc-LiveJournal1            | 1,578,566         | 1,692,282         | 1,890,074 (10)       | 2-4 minutes           |
+| twitter_original_edges      | 92,404            |                   |                      |                       |
+| com-orkut.ungraph.csv       | 1,339,741         |                   |                      |                       |
 
 ***
 Algorithm Analysis
