@@ -97,13 +97,13 @@ The second part that I would like to study and investigate further regards the a
 ***
 Procedure of Algorithm
 
-To replicate the results, each algorithm can be run in the following steps.
-
+To replicate the results, each algorithm can be run in the following steps.  
+  
 File Structure (Empty directories should still be in the repository)
-Root \ 
-|-data (directory) \
-|--all input.csv \
-|--output (directory) \
+Root  
+|-data (directory)  
+|--all input.csv  
+|--output (directory)  
 
 Small Input (log_normal_100.csv, musae_ENGB_edges.csv)
 
