@@ -17,8 +17,6 @@ For small inputs (log_normal_100.csv and musae_ENGB_edges.csv), it was presumed 
 | musae_ENGB_edges.csv | 2968          | Edmonds' Blossom | 1s              |
 
 ***
----
-___
 * Matching for Large Inputs (Israeli-Itai Algorithm)
 
 As an experimental attempt, Edmonds' Blossom Algorithm was run with soc-pokec-relation.csv file overnight, and it was found out that the program had fallen into extreme loops, taking 10,000-100,000 search iterations to process as it reached 10,000,000+ vertices. Due to this reason, the Israeli-Itai Algorithm that we learned from class was implemented in Spark for computability, scalability, and parallelization.
@@ -36,6 +34,7 @@ From the second adjustment, I realized that 1) although the theoretical runtime 
 | twitter_original_edges      | 92,404        | Israeli-Itai + Greedy | 20m 40s         | 27 iterations     |               |
 | com-orkut.ungraph.csv       | 1,339,741     | Israeli-Itai + Greedy | 38m 10s         | 42 iterations     |               |
 
+***
 * Finding Augmenting Paths
 
 After 2-3 repeated trials on each of the larger samples to test for robustness and precision of the output, it was concluded that the Israeli-Itai Algorithm had been implemented corrected. To improve the results, an attempt to identify and flip the augmenting paths was implemented.
@@ -51,6 +50,7 @@ Therefore, an alternative algorithm (augmenting_path_improver.scala) was impleme
 | twitter_original_edges      | 92,404            |                   |                     |                       |
 | com-orkut.ungraph.csv       | 1,339,741         |                   |                     |                       |
 
+***
 * Algorithm Analysis
 
 | Algorithm Name         | Time-Complexity | Space-Complexity | Scalability | Parellelization |
@@ -60,7 +60,8 @@ Therefore, an alternative algorithm (augmenting_path_improver.scala) was impleme
 | Greedy Random Matching |                 |                  |             |                 |
 | Augmenting Path        |                 |                  |             |                 |
 
-
+***
+***
 
 For the final project, you are provided 6 CSV files, each containing an undirected graph, which can be found [here](https://drive.google.com/file/d/1khb-PXodUl82htpyWLMGGNrx-IzC55w8/view?usp=sharing). The files are as follows:  
 
