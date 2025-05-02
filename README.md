@@ -7,33 +7,52 @@
 * Can be found in this repository
 
 ### Objectives
-Parts
-
-
-Description of Algorithms
-Idea, Steps, Reason, Advantage, Guarantee of shuffling rounds, Parallel, Scalable
+* Small Input
+For small inputs (log_normal_100.csv and musae_ENGB_edges.csv), it was presumed possibled to attempt an algorithm that can provide optimal matching, rather than relying on approximations. I referenced Edmonds' Blossom Algorithm and code from NetworkX and Pandas library on Python to compute the exact optimal matching for the two files, and obtained the results below.
 
 | File Name            | Matching Size | Approach         | Runtime (Local) |
 | -------------------- | ------------- | ---------------- | --------------- |
 | log_normal_100.csv   | 50            | Edmonds' Blossom | 1s              |
 | musae_ENGB_edges.csv | 2968          | Edmonds' Blossom | 1s              |
 
+* Large Input (Israeli-Itai)
+As an experimental attempt, Edmonds' Blossom Algorithm was run with soc-pokec-relation.csv file overnight, and it was found out that the program had fallen into extreme loops, taking 10,000-100,000 search iterations to process as it reached 10,000,000+ vertices. Due to this reason, the Israeli-Itai Algorithm that we learned from class was implemented in Spark for computability, scalability, and parallelization.
+
+There were several challenges in implementation, and the first issue was breaking symmetries. When node u proposed to node v ((u,v)-proposal) and node w also proposed to node v ((w,v)-proposal), and it happened to be the case that both node u and node w were assigned 0 and node v was assigned a 1, it caused conflicts where both proposals were considered to be accepted and were added to the matched set. However, this caused the issue of the output file containing multiple edges that shared vertices, making the set an invalid match. To solve this problem, a simple symmetry-breaking adjustment was made, where the "candidateMatches" were assigned a random hash value, and was added to the matched set ("confirmedMatches") based on the priority of the hash value.
+
+Another challenge that came with the mentioned symmetry-breaking issue was that both the local machine and GCP (due to limitations of student license) ran into Java Out of Memory Error. This was mainly due to two factors, first being the excessive .collect() and .persist() calls throughout the original program. Although excessive and unncessary .collect() were able to reduced, .persist() was still necessary for both the debugging purposes and the iterative nature of Isaeli-Itai Algorithm. Therefore, the second implementational adjustment made was utilizing .persist(StorageLevel.DISK_ONLY) to preserve the results from each iteration to reduce memory overload while maintaining the results of each iteration. Later, an output_merger.scala program was made to combine the results of the iterations and merge them into one file.
+
+From the second adjustment, I realized that 1) although the theoretical runtime did not change, practical runtime
 
 | File Name                   | Matching Size | Approach              | Runtime (Local) | Iteration (Local) | Runtime (GCP) |
-| --------------------------- | ------------- | --------------------- | --------------- | ----------------- | ------------- |               
-| soc-pokec-relationships.csv | 599,709       | Israeli-Itai + Greedy |                 |                   |
-| soc-LiveJournal1            |               | Israeli-Itai + Greedy | 17m 25m         | 44 iterations     |
-| twitter_original_edges      |               | Israeli-Itai + Greedy | 20m 40s         | 27 iterations     | 
-| com-orkut.ungraph.csv       |               | Israeli-Itai + Greedy | 38m 10s         | 42 iterations     |
+| --------------------------- | ------------- | --------------------- | --------------- | ----------------- | ------------- |
+| soc-pokec-relationships.csv | 599,709       | Israeli-Itai + Greedy |                 |                   |               |
+| soc-LiveJournal1            | 1,578,484     | Israeli-Itai + Greedy | 17m 25m         | 44 iterations     |               |
+| twitter_original_edges      | 92,404        | Israeli-Itai + Greedy | 20m 40s         | 27 iterations     |               |
+| com-orkut.ungraph.csv       | 1,339,741     | Israeli-Itai + Greedy | 38m 10s         | 42 iterations     |               |
 
-Finding augmented paths
+* Finding Augmenting Paths
+After 2-3 repeated trials on each of the larger samples to test for robustness and precision of the output, it was concluded that the Israeli-Itai Algorithm had been implemented corrected. To improve the results, an attempt to identify and flip the augmenting paths was implemented.
 
-| File Name                   | Original Matching | After 1 Iteration | After 10 Iterations | Runtime/Iteration |
-| --------------------------- | ----------------- | ----------------- | ------------------- | ----------------- |
-| soc-pokec-relationships.csv | 599,709           | 623,483           | 700331              | 1 - 2 minutes     |
-| soc-LiveJournal1            |                   |                   |                     |                   |
-| twitter_original_edges      |                   |                   |                     |                   |
-| com-orkut.ungraph.csv       |                   |                   |                     |                   |
+As searching for augmenting paths are non-trivial, the initial approach was to fully abandon parallelization and implement an algorithm that searchs every augmenting path of a given length (n), by providing a scenario in which n edges are augmenting paths. In other words, the program was to iterate through the nodes and find a condition in which 0-1 are not matched, 1-2 are matched, 2-3 are not matched, and so on. However, through Profession Su's suggestion, it was deemed better to simultaneously search for some of the augmenting paths instead of iteratively finding all of them, as the prior algorithm had significantly faster runtime than the latter, and the advantages of finding "all" augmenting paths of length n was not beneficial enough relative to the computing power that it required.
+
+Therefore, an alternative algorithm (augmenting_path_improver.scala) was implemented,
+
+| File Name                   | Original Matching | After 1 Iteration | After 10 Iterations | Runtime per Iteration |
+| --------------------------- | ----------------- | ----------------- | ------------------- | --------------------- |
+| soc-pokec-relationships.csv | 599,709           | 623,483           | 700331              | 1 - 2 minutes         |
+| soc-LiveJournal1            | 1,578,484         |                   |                     |                       |
+| twitter_original_edges      | 92,404            |                   |                     |                       |
+| com-orkut.ungraph.csv       | 1,339,741         |                   |                     |                       |
+
+* Algorithm Analysis
+| Algorithm Name         | Time-Complexity | Space-Complexity | Scalability | Parellelization |
+| ---------------------- | --------------- | ---------------- | ----------- | --------------- |
+| Edmonds' Blossom       |                 |                  | No          | No              |
+| Israeli-Itai           |                 |                  | Yes         | Yes             |
+| Greedy Random Matching |                 |                  |             |                 |
+| Augmenting Path        |                 |                  |             |                 |
+
 
 
 For the final project, you are provided 6 CSV files, each containing an undirected graph, which can be found [here](https://drive.google.com/file/d/1khb-PXodUl82htpyWLMGGNrx-IzC55w8/view?usp=sharing). The files are as follows:  
