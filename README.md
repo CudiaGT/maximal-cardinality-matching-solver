@@ -57,7 +57,7 @@ Therefore, an alternative algorithm (augmenting_path_improver.scala) was impleme
 | File Name                   | Original Matching | After 1 Iteration | After 10 Iterations | Runtime per Iteration |
 | --------------------------- | ----------------- | ----------------- | ------------------- | --------------------- |
 | soc-pokec-relationships.csv | 599,709           | 623,483           | 700,331             | 1-2 minutes           |
-| soc-LiveJournal1            | 1,578,566         | 1,692,282         |                     | 2-4 minutes           |
+| soc-LiveJournal1            | 1,578,566         | 1,692,282         | 1,890,074           | 2-4 minutes           |
 | twitter_original_edges      | 92,404            |                   |                     |                       |
 | com-orkut.ungraph.csv       | 1,339,741         |                   |                     |                       |
 
@@ -93,6 +93,24 @@ Future Improvements & Studies
 There are several additional procedures that I would have carried out if I had more time and access to stronger computing power. The first is that I am unsure of the exact benefits of the fallback to the Greedy Random Matching Algorithm, as it came from a theoretical standpoint of observing later Israeli-Itai iteration results that showed very few matches or even no matches. Unlike my expectations, the 3-5 trials that I was able to carry out on the larger data (as smaller input would rarely have meaningful number of iterations to begin with), did not show noticeable differences in the total number of iterations nor the runtime.
 
 The second part that I would like to study and investigate further regards the augmenting paths. Due to the nature of the assignment, my primary goal in implementing and testing out the augmenting path algorithm was the boost the matching size of the solutions, and therefore, the approach the I took was to mainly boost soc-LiveJournal1.csv and com-orkut.ungraph.csv, as they had the largest room for improvements relative to percent change. Unfortunately, what I was unable to address due to this approach was what exact 1/ε-approximation I am reaching through the iterations of augmenting path algorithm, and if, at a certain point, it would be/would have been more beneficial to improve my original algorithm and implement one that searches for augmenting paths of length 5 or more. If I had almost run out of augmenting paths of length 3 after a certain number of iterations, for a large and relatively well distributed data such as soc-pokec-relationships.csv, or soc-LiveJournal1.csv it could have been better to implement such an algorithm for a larger increase in the size of the matched set. 
+
+***
+Procedure of Algorithm
+
+To replicate the results, each algorithm can be run in the following steps.
+
+File Structure (Empty directories should still be in the repository)
+Root
+|-data (directory)
+|--all input.csv
+|--output (directory)
+
+Small Input (log_normal_100.csv, musae_ENGB_edges.csv)
+
+
+
+Large Input (other csv files)
+
 
 ***
 
