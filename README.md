@@ -66,7 +66,7 @@ Algorithm Analysis
 
 | Algorithm Name         | Time-Complexity | Space-Complexity | Scalability            | Parellelization |
 | ---------------------- | --------------- | ---------------- | ---------------------- | --------------- |
-| Edmonds' Blossom       | O(V<sup>3<\sup>)          |                  | No                     | No              |
+| Edmonds' Blossom       | O(V<sup>3<\sup> |                  | No                     | No              |
 | Israeli-Itai           | O(E) * k        | O(V + E)         | Yes                    | Yes             |
 | Greedy Random Matching | O(E') * l       | O(V + E')        | Yes (when E' is small) | No              |
 | Augmenting Path        | O(E + plog(p)   | O(m + n + p)     | Yes                    | Yes             |
