@@ -9,7 +9,6 @@
 
 ***
 ### Objectives
-***
 * Matching for Small Inputs (Edmonds' Blossom Algorithm)
 
 For small inputs (log_normal_100.csv and musae_ENGB_edges.csv), it was presumed possibled to attempt an algorithm that can provide optimal matching, rather than relying on approximations. I referenced Edmonds' Blossom Algorithm and code from NetworkX and Pandas library on Python to compute the exact optimal matching for the two files, and obtained the results below.
@@ -63,7 +62,6 @@ Therefore, an alternative algorithm (augmenting_path_improver.scala) was impleme
 | Greedy Random Matching |                 |                  |             |                 |
 | Augmenting Path        |                 |                  |             |                 |
 
-***
 ***
 
 For the final project, you are provided 6 CSV files, each containing an undirected graph, which can be found [here](https://drive.google.com/file/d/1khb-PXodUl82htpyWLMGGNrx-IzC55w8/view?usp=sharing). The files are as follows:  
