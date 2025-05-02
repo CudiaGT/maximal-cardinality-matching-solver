@@ -7,7 +7,7 @@
 * Can be found in this repository
 
 ### Objectives
-* Small Input
+* Matching for Small Inputs (Edmonds' Blossom Algorithm)
 
 For small inputs (log_normal_100.csv and musae_ENGB_edges.csv), it was presumed possibled to attempt an algorithm that can provide optimal matching, rather than relying on approximations. I referenced Edmonds' Blossom Algorithm and code from NetworkX and Pandas library on Python to compute the exact optimal matching for the two files, and obtained the results below.
 
@@ -16,7 +16,7 @@ For small inputs (log_normal_100.csv and musae_ENGB_edges.csv), it was presumed 
 | log_normal_100.csv   | 50            | Edmonds' Blossom | 1s              |
 | musae_ENGB_edges.csv | 2968          | Edmonds' Blossom | 1s              |
 
-* Large Input (Israeli-Itai)
+* Matching for Large Inputs (Israeli-Itai Algorithm)
 
 As an experimental attempt, Edmonds' Blossom Algorithm was run with soc-pokec-relation.csv file overnight, and it was found out that the program had fallen into extreme loops, taking 10,000-100,000 search iterations to process as it reached 10,000,000+ vertices. Due to this reason, the Israeli-Itai Algorithm that we learned from class was implemented in Spark for computability, scalability, and parallelization.
 
@@ -34,6 +34,7 @@ From the second adjustment, I realized that 1) although the theoretical runtime 
 | com-orkut.ungraph.csv       | 1,339,741     | Israeli-Itai + Greedy | 38m 10s         | 42 iterations     |               |
 
 * Finding Augmenting Paths
+
 After 2-3 repeated trials on each of the larger samples to test for robustness and precision of the output, it was concluded that the Israeli-Itai Algorithm had been implemented corrected. To improve the results, an attempt to identify and flip the augmenting paths was implemented.
 
 As searching for augmenting paths are non-trivial, the initial approach was to fully abandon parallelization and implement an algorithm that searchs every augmenting path of a given length (n), by providing a scenario in which n edges are augmenting paths. In other words, the program was to iterate through the nodes and find a condition in which 0-1 are not matched, 1-2 are matched, 2-3 are not matched, and so on. However, through Profession Su's suggestion, it was deemed better to simultaneously search for some of the augmenting paths instead of iteratively finding all of them, as the prior algorithm had significantly faster runtime than the latter, and the advantages of finding "all" augmenting paths of length n was not beneficial enough relative to the computing power that it required.
