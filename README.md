@@ -9,7 +9,7 @@
 | musae_ENGB_edges.csv        | musae_ENGB_edges_solution.csv        | 2,968         |
 | soc-pokec-relationships.csv | soc-pokec-relationships_solution.csv | 703,095       |
 | soc-LiveJournal1.csv        | soc-LiveJournal1_solution.csv        | 1,890,074     |
-| twitter_original_edges.csv  | twitter_original_edges_solution.csv  |               |
+| twitter_original_edges.csv  | twitter_original_edges_solution.csv  | 92,404        |
 | com-orkut.ungraph.csv       | com-orkut.ungraph_solution.csv       |               |
 
 ***
@@ -38,7 +38,7 @@ Another challenge that came with the mentioned symmetry-breaking issue was that 
 
 From the second adjustment, I realized that 1) although the theoretical runtime did not change, practical runtime is affected by writing the results into the hard drive, and 2) there are several iterations later in the algorithm that produce very few matches or even no matches. It was assumed that the 1/4 probability of proposal leading to a match made it difficult for multiple edges to be matched in a single iteration as the graph became sparse. To address both problems, at once, I modified the Israeli-Itai algorithm to perform a fallback to Greedy Random Matching algorithm when it was deemed that the graph has been brought down to a small size. To determine the mentioned "small-size", a zeroMatchStreak was introduced, a variable the was incremented by 1 every time no match was formed in a given iteration. This way, when the zeroMatchStreak reaches 3 (arbitrary selected value), the algorithm would determine the graph to be sparse enough for Greedy Random Matching algorithm, and form matches for the remaining edges in a deterministic way.
 
-| File Name                   | Matching Size | Approach              | Runtime (Local) | Iteration (+ Greedy) | Runtime (GCP) |
+| File Name                   | Matching Size | Approach              | Runtime (Local) | Iteration (+ Greedy) | Runtime (GCP ) |
 | --------------------------- | ------------- | --------------------- | --------------- | -------------------- | ------------- |
 | soc-pokec-relationships.csv | 599,709       | Israeli-Itai + Greedy |                 |                      |               |
 | soc-LiveJournal1            | 1,578,566     | Israeli-Itai + Greedy | 16m 37m         | 42 + 2               |               |
@@ -58,7 +58,7 @@ Therefore, an alternative algorithm (augmenting_path_improver.scala) was impleme
 | --------------------------- | ----------------- | ----------------- | -------------------- | --------------------- |
 | soc-pokec-relationships.csv | 599,709           | 623,483           | 703,095 (16)         | ~1 minute             |
 | soc-LiveJournal1            | 1,578,566         | 1,692,282         | 1,890,074 (10)       | 2-4 minutes           |
-| twitter_original_edges      | 92,404            |                   |  (1)                 |                       |
+| twitter_original_edges      | 92,404            | N/A               | N/A                  | N/A                   |
 | com-orkut.ungraph.csv       | 1,339,741         |                   |                      |                       |
 
 ***
