@@ -57,7 +57,7 @@ Therefore, an alternative algorithm (augmenting_path_improver.scala) was impleme
 | File Name                   | Original Matching | After 1 Iteration | After 10 Iterations | Runtime per Iteration |
 | --------------------------- | ----------------- | ----------------- | ------------------- | --------------------- |
 | soc-pokec-relationships.csv | 599,709           | 623,483           | 700,331             | 1-2 minutes           |
-| soc-LiveJournal1            | 1,578,566         | 1,692,282         | 4->6                | 3-4 minutes           |
+| soc-LiveJournal1            | 1,578,566         | 1,692,282         |                     | 2-4 minutes           |
 | twitter_original_edges      | 92,404            |                   |                     |                       |
 | com-orkut.ungraph.csv       | 1,339,741         |                   |                     |                       |
 
