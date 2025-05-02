@@ -8,6 +8,7 @@
 
 ### Objectives
 * Small Input
+
 For small inputs (log_normal_100.csv and musae_ENGB_edges.csv), it was presumed possibled to attempt an algorithm that can provide optimal matching, rather than relying on approximations. I referenced Edmonds' Blossom Algorithm and code from NetworkX and Pandas library on Python to compute the exact optimal matching for the two files, and obtained the results below.
 
 | File Name            | Matching Size | Approach         | Runtime (Local) |
@@ -16,6 +17,7 @@ For small inputs (log_normal_100.csv and musae_ENGB_edges.csv), it was presumed 
 | musae_ENGB_edges.csv | 2968          | Edmonds' Blossom | 1s              |
 
 * Large Input (Israeli-Itai)
+
 As an experimental attempt, Edmonds' Blossom Algorithm was run with soc-pokec-relation.csv file overnight, and it was found out that the program had fallen into extreme loops, taking 10,000-100,000 search iterations to process as it reached 10,000,000+ vertices. Due to this reason, the Israeli-Itai Algorithm that we learned from class was implemented in Spark for computability, scalability, and parallelization.
 
 There were several challenges in implementation, and the first issue was breaking symmetries. When node u proposed to node v ((u,v)-proposal) and node w also proposed to node v ((w,v)-proposal), and it happened to be the case that both node u and node w were assigned 0 and node v was assigned a 1, it caused conflicts where both proposals were considered to be accepted and were added to the matched set. However, this caused the issue of the output file containing multiple edges that shared vertices, making the set an invalid match. To solve this problem, a simple symmetry-breaking adjustment was made, where the "candidateMatches" were assigned a random hash value, and was added to the matched set ("confirmedMatches") based on the priority of the hash value.
