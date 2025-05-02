@@ -17,6 +17,8 @@ For small inputs (log_normal_100.csv and musae_ENGB_edges.csv), it was presumed 
 | musae_ENGB_edges.csv | 2968          | Edmonds' Blossom | 1s              |
 
 ***
+---
+___
 * Matching for Large Inputs (Israeli-Itai Algorithm)
 
 As an experimental attempt, Edmonds' Blossom Algorithm was run with soc-pokec-relation.csv file overnight, and it was found out that the program had fallen into extreme loops, taking 10,000-100,000 search iterations to process as it reached 10,000,000+ vertices. Due to this reason, the Israeli-Itai Algorithm that we learned from class was implemented in Spark for computability, scalability, and parallelization.
