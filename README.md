@@ -7,17 +7,33 @@
 * Can be found in this repository
 
 ### Objectives
-| Input File Name             | Matching Size | Approach | Runtime (Local) | Runtime (GCP) |
-| --------------------------- | ------------- | -------- | --------------- | ------------- |
-| soc-pokec-relationships.csv |  |  |  |  |
-| soc-LiveJournal1            |  | 17m 25m | 44 iterations |
-| twitter_original_edges      |  | 20m 40s | 27 iterations | 
-| com-orkut.ungraph.csv       |  | 38m 10s | 42 iterations |
+Parts
+
 
 Description of Algorithms
 Idea, Steps, Reason, Advantage, Guarantee of shuffling rounds, Parallel, Scalable
 
-Future Approach for a Given Sample and why
+| File Name            | Matching Size | Approach         | Runtime (Local) |
+| -------------------- | ------------- | ---------------- | --------------- |
+| log_normal_100.csv   | 50            | Edmonds' Blossom | 1s              |
+| musae_ENGB_edges.csv | 2968          | Edmonds' Blossom | 1s              |
+
+
+| File Name                   | Matching Size | Approach              | Runtime (Local) | Iteration (Local) | Runtime (GCP) |
+| --------------------------- | ------------- | --------------------- | --------------- | ----------------- | ------------- |               
+| soc-pokec-relationships.csv | 599,709       | Israeli-Itai + Greedy |                 |                   |
+| soc-LiveJournal1            |               | Israeli-Itai + Greedy | 17m 25m         | 44 iterations     |
+| twitter_original_edges      |               | Israeli-Itai + Greedy | 20m 40s         | 27 iterations     | 
+| com-orkut.ungraph.csv       |               | Israeli-Itai + Greedy | 38m 10s         | 42 iterations     |
+
+Finding augmented paths
+
+| File Name                   | Original Matching | After 1 Iteration | After 10 Iterations | Runtime/Iteration |
+| --------------------------- | ----------------- | ----------------- | ------------------- | ----------------- |
+| soc-pokec-relationships.csv | 599,709           | 623,483           | 700331              | 1 - 2 minutes     |
+| soc-LiveJournal1            |                   |                   |                     |                   |
+| twitter_original_edges      |                   |                   |                     |                   |
+| com-orkut.ungraph.csv       |                   |                   |                     |                   |
 
 
 For the final project, you are provided 6 CSV files, each containing an undirected graph, which can be found [here](https://drive.google.com/file/d/1khb-PXodUl82htpyWLMGGNrx-IzC55w8/view?usp=sharing). The files are as follows:  
