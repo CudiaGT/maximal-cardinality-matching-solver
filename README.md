@@ -29,12 +29,12 @@ Another challenge that came with the mentioned symmetry-breaking issue was that 
 
 From the second adjustment, I realized that 1) although the theoretical runtime did not change, practical runtime
 
-| File Name                   | Matching Size | Approach              | Runtime (Local) | Iteration (Local) | Runtime (GCP) |
-| --------------------------- | ------------- | --------------------- | --------------- | ----------------- | ------------- |
-| soc-pokec-relationships.csv | 599,709       | Israeli-Itai + Greedy |                 |                   |               |
-| soc-LiveJournal1            | 1,578,484     | Israeli-Itai + Greedy | 17m 25m         | 44 iterations     |               |
-| twitter_original_edges      | 92,404        | Israeli-Itai + Greedy | 20m 40s         | 27 iterations     |               |
-| com-orkut.ungraph.csv       | 1,339,741     | Israeli-Itai + Greedy | 38m 10s         | 42 iterations     |               |
+| File Name                   | Matching Size | Approach              | Runtime (Local) | Iteration (+ Greedy) | Runtime (GCP) |
+| --------------------------- | ------------- | --------------------- | --------------- | -------------------- | ------------- |
+| soc-pokec-relationships.csv | 599,709       | Israeli-Itai + Greedy |                 |                      |               |
+| soc-LiveJournal1            | 1,578,566     | Israeli-Itai + Greedy | 16m 37m         | 42 + 2               |               |
+| twitter_original_edges      | 92,404        | Israeli-Itai + Greedy | 20m 40s         | 27                   |               |
+| com-orkut.ungraph.csv       | 1,339,741     | Israeli-Itai + Greedy | 38m 10s         | 42                   |               |
 
 ***
 Finding Augmenting Paths
@@ -47,20 +47,41 @@ Therefore, an alternative algorithm (augmenting_path_improver.scala) was impleme
 
 | File Name                   | Original Matching | After 1 Iteration | After 10 Iterations | Runtime per Iteration |
 | --------------------------- | ----------------- | ----------------- | ------------------- | --------------------- |
-| soc-pokec-relationships.csv | 599,709           | 623,483           | 700331              | 1 - 2 minutes         |
-| soc-LiveJournal1            | 1,578,484         |                   |                     |                       |
+| soc-pokec-relationships.csv | 599,709           | 623,483           | 700331              | ~1 minute             |
+| soc-LiveJournal1            | 1,578,566         | 1,692,282         |                     |                       |
 | twitter_original_edges      | 92,404            |                   |                     |                       |
 | com-orkut.ungraph.csv       | 1,339,741         |                   |                     |                       |
 
 ***
-* Algorithm Analysis
+Algorithm Analysis
 
-| Algorithm Name         | Time-Complexity | Space-Complexity | Scalability | Parellelization |
-| ---------------------- | --------------- | ---------------- | ----------- | --------------- |
-| Edmonds' Blossom       |                 |                  | No          | No              |
-| Israeli-Itai           |                 |                  | Yes         | Yes             |
-| Greedy Random Matching |                 |                  |             |                 |
-| Augmenting Path        |                 |                  |             |                 |
+| Algorithm Name         | Time-Complexity | Space-Complexity | Scalability            | Parellelization |
+| ---------------------- | --------------- | ---------------- | ---------------------- | --------------- |
+| Edmonds' Blossom       | O(V^3)          |                  | No                     | No              |
+| Israeli-Itai           | O(E) * k        | O(V + E)         | Yes                    | Yes             |
+| Greedy Random Matching | O(E') * l       | O(V + E')        | Yes (when E' is small) | No              |
+| Augmenting Path        | O(E + plog(p)   | O(m + n + p)     | Yes                    | Yes             |
+
+Legend:
+V = Number of Vertices
+V' = Number of Vertices Left
+E = Number of Edges
+k = Number of Israeli-Itai Iterations
+l = Number of Greedy Random Matching Iterations
+p = Number of Augmenting Paths FOUND
+
+Edmonds' Blossom Algorithm has been borrowed from a readily-distributed library and therefore its time and space complexity are fixed to the widely studied results.
+
+The Israeli-Itai + Greedy Random Matching Algorithm has time-complexity of O(E * k) and O(E' * l). For Israeli-Itai, the algorithm is parallelizable as it utilizes RDD through Spark, while Greedy Random Matching is not. This is due to the how the Greedy Random Matching makes the decisions for forming a match, and it cannot be parallelized. However, both algorithms are deemed scalable, as the entire algorithm is expected to only fall back to Greedy Random Matching when E' is significantly smaller than E, allowing the computational complexity to be drastically reduced at the point of fallback. Regarding the space complexity, the initial loading of the edges take up O(m) space, and the broadcasts including activeVertices (remaining vertices), vertexBits (randomly assigned bits), and confirmedMatches (list of matches made in a given iteration) take up O(n) space. However, regarding the intermediate results and groupings of edges, they are programmed to be recorded directly at the hard drive, limiting the coefficient of O(m) from growing unmanageably large.
+
+The algorithm to find augmenting path has time-complexity of O(E + plog(p)). This is because the comparison between the original edges and the matched set consumes O(m) time, and the shuffling process incorporated in resolving conflicts for overlapping augmenting paths requires O(plog(p) time. 
+
+***
+Future Improvements & Studies
+
+There are several additional procedures that I would have carried out if I had more time and access to stronger computing power. The first is that I am unsure of the exact benefits of the fallback to the Greedy Random Matching Algorithm, as it came from a theoretical standpoint of observing later Israeli-Itai iteration results that showed very few matches or even no matches. Unlike my expectations, the 3-5 trials that I was able to carry out on the larger data (as smaller input would rarely have meaningful number of iterations to begin with), did not show noticeable differences in the total number of iterations nor the runtime.
+
+The second part that I would like to study and investigate further regards the augmenting paths. Due to the nature of the assignment, my primary goal in implementing and testing out the augmenting path algorithm was the boost the matching size of the solutions, and therefore, the approach the I took was to mainly boost soc-LiveJournal1.csv and com-orkut.ungraph.csv, as they had the largest room for improvements relative to percent change. Unfortunately, what I was unable to address due to this approach was what exact 1/\epsilon-approximation I am reaching through the iterations of augmenting path algorithm, and if, at a certain point, it would be/would have been more beneficial to improve my original algorithm and implement one that searches for augmenting paths of length 5 or more. If I had almost run out of augmenting paths of length 3 after a certain number of iterations, for large relatively nicely distributed data such as soc-pokec-relationships.csv, it could have been better to implement such an algorithm for a larger increase in the size of the matched set. 
 
 ***
 
