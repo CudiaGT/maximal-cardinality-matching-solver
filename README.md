@@ -99,7 +99,8 @@ Procedure of Algorithm
 
 To replicate the results, each algorithm can be run in the following steps.  
   
-File Structure (Empty directories should still be in the repository)
+File Structure (Empty directories should still be in the repository)  
+  
 Root  
 |-data (directory)  
 |--all input.csv  
