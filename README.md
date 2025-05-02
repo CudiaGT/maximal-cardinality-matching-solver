@@ -46,6 +46,7 @@ Therefore, an alternative algorithm (augmenting_path_improver.scala) was impleme
 | com-orkut.ungraph.csv       | 1,339,741         |                   |                     |                       |
 
 * Algorithm Analysis
+
 | Algorithm Name         | Time-Complexity | Space-Complexity | Scalability | Parellelization |
 | ---------------------- | --------------- | ---------------- | ----------- | --------------- |
 | Edmonds' Blossom       |                 |                  | No          | No              |
