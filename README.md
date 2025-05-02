@@ -3,14 +3,14 @@
 ### Solution Files
 * www.harimkim.com
 
-| Input File Name             | Output File Name | Matching Size |
-| --------------------------- | ---------------- | ------------- |
-| log_normal_100.csv          | log_normal_100_solution.csv
-| musae_ENGB_edges.csv        |
-| soc-pokec-relationships.csv |
-| soc-LiveJournal1.csv        | 
-| twitter_original_edges.csv  |
-| com-orkut.ungraph.csv       |
+| Input File Name             | Output File Name                     | Matching Size |
+| --------------------------- | ------------------------------------ | ------------- |
+| log_normal_100.csv          | log_normal_100_solution.csv          |  |
+| musae_ENGB_edges.csv        | musae_ENGB_edges_solution.csv        |  |
+| soc-pokec-relationships.csv | soc-pokec-relationships_solution.csv |  |
+| soc-LiveJournal1.csv        | soc-LiveJournal1_solution.csv        |  |
+| twitter_original_edges.csv  | twitter_original_edges_solution.csv  |  |
+| com-orkut.ungraph.csv       | com-orkut.ungraph_solution.csv       |  |
 
 ***
 ### Code
