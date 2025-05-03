@@ -40,7 +40,7 @@ From the second adjustment, I realized that 1) although the theoretical runtime 
 
 | File Name                   | Matching Size | Approach              | Runtime (Local) | Iteration (+ Greedy) | Runtime (GCP 4x2 Cores) |
 | --------------------------- | ------------- | --------------------- | --------------- | -------------------- | ----------------------- |
-| soc-pokec-relationships.csv | 599,709       | Israeli-Itai + Greedy | 7m 57s          | 40 + 2               | 10m 36s                 |
+| soc-pokec-relationships.csv | 599,530       | Israeli-Itai + Greedy | 7m 57s          | 40 + 2               | 10m 36s                 |
 | soc-LiveJournal1            | 1,578,566     | Israeli-Itai + Greedy | 16m 37m         | 42 + 2               | 20m 7s                  |
 | twitter_original_edges      | 92,404        | Israeli-Itai + Greedy | 20m 40s         | 27                   | 38m 16s                 |
 | com-orkut.ungraph.csv       | 1,339,741     | Israeli-Itai + Greedy | 38m 10s         | 42                   | 40m 43s                 |
@@ -56,7 +56,7 @@ Therefore, an alternative algorithm (augmenting_path_improver.scala) was impleme
 
 | File Name                   | Original Matching | After 1 Iteration | After (n) Iterations | Runtime per Iteration |
 | --------------------------- | ----------------- | ----------------- | -------------------- | --------------------- |
-| soc-pokec-relationships.csv | 599,709           | 623,483           | 703,095 (16)         | 1-2 minutes           |
+| soc-pokec-relationships.csv | 599,530           | 623,483           | 703,095 (16)         | 1-2 minutes           |
 | soc-LiveJournal1            | 1,578,566         | 1,692,282         | 1,890,074 (10)       | 2-4 minutes           |
 | twitter_original_edges      | 92,404            | N/A               | N/A                  | N/A                   |
 | com-orkut.ungraph.csv       | 1,339,741         | 1,363,212         | 1,461,419 (10)       | 5-7 minutes           |
