@@ -1,3 +1,14 @@
+error id: `<none>`.
+file://<WORKSPACE>/src/main/scala/final_project/matching_verifier.scala
+empty definition using pc, found symbol in pc: `<none>`.
+semanticdb not found
+empty definition using fallback
+non-local guesses:
+
+offset: 494
+uri: file://<WORKSPACE>/src/main/scala/final_project/matching_verifier.scala
+text:
+```scala
 package final_project
 
 import org.apache.spark.sql.SparkSession
@@ -9,11 +20,11 @@ import org.apache.spark.graphx._
 import org.apache.spark.storage.StorageLevel
 
 object matching_verifier{
-  def main(args: Array[String]): Unit = {
+  def main(args: Array[String]) {
 
     val conf = new SparkConf().setAppName("verifier")
     val sc = new SparkContext(conf)
-    val spark = SparkSession.builder.config(conf).getOrCreate()
+    val spark = SparkSession.builder.confi@@g(conf).getOrCreate()
   /* You can either use sc or spark */
 
     if(args.length != 2) {
@@ -28,6 +39,8 @@ object matching_verifier{
       else
         Edge(x(1).toLong, x(0).toLong, 1)
     }
+
+
 
     val graph_edges = sc.textFile(args(0)).map(line_to_canonical_edge)
     val matched_edges = sc.textFile(args(1)).map(line_to_canonical_edge)
@@ -47,7 +60,13 @@ object matching_verifier{
       println("The matched edges do not form a matching.")
       sys.exit(1)
     }
-    println("===============================================================\n" +
-      "The matched edges form a matching of size: " + matched_edges.count + "\n===============================================================")
+    println("The matched edges form a matching of size: "+matched_edges.count)
   }
 }
+
+```
+
+
+#### Short summary: 
+
+empty definition using pc, found symbol in pc: `<none>`.
