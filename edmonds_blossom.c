@@ -97,7 +97,7 @@ int findPath(int root) {
         }
         steps++;
         if (steps % 10000 == 0) {
-            printf("  BFS steps: %d\n", steps);
+            printf("BFS steps: %d\n", steps);
             fflush(stdout);
         }
     }
@@ -180,23 +180,21 @@ int main(int argc, char* argv[]) {
 
     clock_t start_time = clock();
 
-    printf("Starting graph load...\n");
     loadGraph(argv[1]);
+    printf("Graph Loaded.\n");
 
-    printf("Starting matching process...\n");
     int matches = maxMatching();
-    printf("Maximum Matching Found: %d edges.\n", matches);
+    printf("Optimal Matching with %d edges.\n", matches);
 
-    printf("Saving matching...\n");
     saveMatching(argv[2]);
-    printf("Matching saved successfully.\n");
+    printf("Matched set saved.\n");
 
     clock_t end_time = clock();
     double total_seconds = (double)(end_time - start_time) / CLOCKS_PER_SEC;
 
-    int hours = (int)(total_seconds / 3600);
-    int minutes = (int)((total_seconds - hours * 3600) / 60);
-    int seconds = (int)(total_seconds - hours * 3600 - minutes * 60);
+    int hours = (int) (total_seconds / 3600);
+    int minutes = (int) ((total_seconds - hours * 3600) / 60);
+    int seconds = (int) (total_seconds - hours * 3600 - minutes * 60);
 
     printf("Total runtime: %d hours, %d minutes, %d seconds\n", hours, minutes, seconds);
 
