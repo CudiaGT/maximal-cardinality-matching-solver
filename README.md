@@ -10,7 +10,7 @@
 | soc-pokec-relationships.csv | soc-pokec-relationships_solution.csv | 703,095       |
 | soc-LiveJournal1.csv        | soc-LiveJournal1_solution.csv        | 1,890,074     |
 | twitter_original_edges.csv  | twitter_original_edges_solution.csv  | 92,404        |
-| com-orkut.ungraph.csv       | com-orkut.ungraph_solution.csv       |               |
+| com-orkut.ungraph.csv       | com-orkut.ungraph_solution.csv       | 1,461,419     |
 
 ***
 ### Code
@@ -56,10 +56,10 @@ Therefore, an alternative algorithm (augmenting_path_improver.scala) was impleme
 
 | File Name                   | Original Matching | After 1 Iteration | After (n) Iterations | Runtime per Iteration |
 | --------------------------- | ----------------- | ----------------- | -------------------- | --------------------- |
-| soc-pokec-relationships.csv | 599,709           | 623,483           | 703,095 (16)         | ~1 minute             |
+| soc-pokec-relationships.csv | 599,709           | 623,483           | 703,095 (16)         | 1-2 minutes           |
 | soc-LiveJournal1            | 1,578,566         | 1,692,282         | 1,890,074 (10)       | 2-4 minutes           |
 | twitter_original_edges      | 92,404            | N/A               | N/A                  | N/A                   |
-| com-orkut.ungraph.csv       | 1,339,741         | 1,363,212         | 1,461,419 (10)       | 6 minutes             |
+| com-orkut.ungraph.csv       | 1,339,741         | 1,363,212         | 1,461,419 (10)       | 5-7 minutes           |
 
 ***
 Algorithm Analysis
