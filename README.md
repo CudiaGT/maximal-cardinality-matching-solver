@@ -14,7 +14,7 @@
 
 ***
 ### Code
-* Can be found in this repository
+* Submitted via this GitHub Repository
 
 ***
 ### Objectives
