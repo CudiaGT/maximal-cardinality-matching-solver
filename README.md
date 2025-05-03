@@ -43,7 +43,7 @@ From the second adjustment, I realized that 1) although the theoretical runtime 
 | soc-pokec-relationships.csv | 599,530       | Israeli-Itai + Greedy | 7m 57s          | 40 + 2               | 10m 36s                 |
 | soc-LiveJournal1            | 1,578,566     | Israeli-Itai + Greedy | 16m 37m         | 42 + 2               | 20m 7s                  |
 | twitter_original_edges      | 92,404        | Israeli-Itai + Greedy | 20m 40s         | 27 + 0               | 38m 16s                 |
-| com-orkut.ungraph.csv       | 1,339,741     | Israeli-Itai + Greedy | 38m 10s         | 42                   | 40m 43s                 |
+| com-orkut.ungraph.csv       | 1,339,741     | Israeli-Itai + Greedy | 38m 10s         | 42 + 3               | 40m 43s                 |
 
 ***
 Finding Augmenting Paths
