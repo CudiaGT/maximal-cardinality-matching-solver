@@ -38,12 +38,12 @@ Another challenge that came with the mentioned symmetry-breaking issue was that 
 
 From the second adjustment, I realized that 1) although the theoretical runtime did not change, practical runtime is affected by writing the results into the hard drive, and 2) there are several iterations later in the algorithm that produce very few matches or even no matches. It was assumed that the 1/4 probability of proposal leading to a match made it difficult for multiple edges to be matched in a single iteration as the graph became sparse. To address both problems, at once, I modified the Israeli-Itai algorithm to perform a fallback to Greedy Random Matching algorithm when it was deemed that the graph has been brought down to a small size. To determine the mentioned "small-size", a zeroMatchStreak was introduced, a variable the was incremented by 1 every time no match was formed in a given iteration. This way, when the zeroMatchStreak reaches 3 (arbitrary selected value), the algorithm would determine the graph to be sparse enough for Greedy Random Matching algorithm, and form matches for the remaining edges in a deterministic way.
 
-| File Name                   | Matching Size | Approach              | Runtime (Local) | Iteration (+ Greedy) | Runtime (GCP ) |
-| --------------------------- | ------------- | --------------------- | --------------- | -------------------- | ------------- |
-| soc-pokec-relationships.csv | 599,709       | Israeli-Itai + Greedy |                 |                      |               |
-| soc-LiveJournal1            | 1,578,566     | Israeli-Itai + Greedy | 16m 37m         | 42 + 2               |               |
-| twitter_original_edges      | 92,404        | Israeli-Itai + Greedy | 20m 40s         | 27                   |               |
-| com-orkut.ungraph.csv       | 1,339,741     | Israeli-Itai + Greedy | 38m 10s         | 42                   |               |
+| File Name                   | Matching Size | Approach              | Runtime (Local) | Iteration (+ Greedy) | Runtime (GCP 4x2 Cores) |
+| --------------------------- | ------------- | --------------------- | --------------- | -------------------- | ----------------------- |
+| soc-pokec-relationships.csv | 599,709       | Israeli-Itai + Greedy |                 |                      |                         |
+| soc-LiveJournal1            | 1,578,566     | Israeli-Itai + Greedy | 16m 37m         | 42 + 2               | 20m 7s                  |
+| twitter_original_edges      | 92,404        | Israeli-Itai + Greedy | 20m 40s         | 27                   | 38m 16s                 |
+| com-orkut.ungraph.csv       | 1,339,741     | Israeli-Itai + Greedy | 38m 10s         | 42                   | 40m 43s                 |
 
 ***
 Finding Augmenting Paths
@@ -52,14 +52,14 @@ After 2-3 repeated trials on each of the larger samples to test for robustness a
 
 As searching for augmenting paths are non-trivial, the initial approach was to fully abandon parallelization and implement an algorithm that searchs every augmenting path of a given length (n), by providing a scenario in which n edges are augmenting paths. In other words, the program was to iterate through the nodes and find a condition in which 0-1 are not matched, 1-2 are matched, 2-3 are not matched, and so on. However, through Profession Su's suggestion, it was deemed better to simultaneously search for some of the augmenting paths instead of iteratively finding all of them, as the prior algorithm had significantly faster runtime than the latter, and the advantages of finding "all" augmenting paths of length n was not beneficial enough relative to the computing power that it required.
 
-Therefore, an alternative algorithm (augmenting_path_improver.scala) was implemented, searching for augmenting paths of length 3 at parallel at each iteration, and resolving conflicts when they occur. For submission purposes, the augmenting path algorithm was run once on each large dataset once, then as much as time allowed to maximize the size of the matched set.
+Therefore, an alternative algorithm (augmenting_path_improver.scala) was implemented, searching for augmenting paths of length 3 at parallel at each iteration, and resolving conflicts when they occur. With the exception of twitter_original_edges.csv, each graph was run through the augmenting path algorithm once to record data, and then was run through multiple iterations until the improvements began to drastically reduce (less than 5,000 augmenting paths per iteration). In the case of twitter_original_edges.csv, due to the skewedness of the graph that led to vast numbers of conflicting augmenting paths that had to be stored and resolved, neither the local machine nor GCP was able to avoid running into Java Out of Memory Error.
 
 | File Name                   | Original Matching | After 1 Iteration | After (n) Iterations | Runtime per Iteration |
 | --------------------------- | ----------------- | ----------------- | -------------------- | --------------------- |
 | soc-pokec-relationships.csv | 599,709           | 623,483           | 703,095 (16)         | ~1 minute             |
 | soc-LiveJournal1            | 1,578,566         | 1,692,282         | 1,890,074 (10)       | 2-4 minutes           |
 | twitter_original_edges      | 92,404            | N/A               | N/A                  | N/A                   |
-| com-orkut.ungraph.csv       | 1,339,741         |                   |                      |                       |
+| com-orkut.ungraph.csv       | 1,339,741         | 1,363,212         | 1,461,419 (10)       | 6 minutes             |
 
 ***
 Algorithm Analysis
