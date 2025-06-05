@@ -4,8 +4,11 @@ This project aims to design and develop a scalable and parallelizable algorithm 
 
 Keywords -- Maximal Cardinality Matching, Israeli-Itai, Greedy Random Matching, Fallback, Augmenting Path, RDD, GraphX, Scala, Apache Spark, Parallel Computing
 
-## Introduction
-The Israeli-Itai algorithm is an effective and scalable algorithm in forming a valid matched set in large-scale data, as it is fundamentally parallelizable. 
+## I. Introduction
+The Israeli-Itai algorithm is an effective and scalable algorithm in forming a valid matched set in large-scale data, as it utilizes parallel message exchange among vertices. However, when implemented, there exists a discrepancy between the theoretical and empirical time-complexity due to how the algorithm determines which of the proposals will be accepted (generating random bits and breaking symmetry). To investigate this problem further, the Israeli-Itai algorithm was implemented to produce output files after each iteration, showing how many edges were added to the matched set in the given iteration.
+
+## II. Hybrid Algorithm Utilizing Fallback to Greedy Random Matching
+
 
 ## Results
 ### Solution Files
