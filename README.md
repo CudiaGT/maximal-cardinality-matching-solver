@@ -9,10 +9,7 @@ The Israeli-Itai algorithm is an effective and scalable algorithm in forming a v
 
 ## II. Hybrid Algorithm Utilizing Fallback to Greedy Random Matching
 
-
-## Results
-### Solution Files
-* https://drive.google.com/file/d/137toM72xU5jHvtGglzZw_7nhyJSO12CM/view?usp=sharing
+## III. Maximal Cardinality Matching Results
 
 | Input File Name             | Output File Name                     | Matching Size |
 | --------------------------- | ------------------------------------ | ------------- |
@@ -22,6 +19,14 @@ The Israeli-Itai algorithm is an effective and scalable algorithm in forming a v
 | soc-LiveJournal1.csv        | soc-LiveJournal1_solution.csv        | 1,890,074     |
 | twitter_original_edges.csv  | twitter_original_edges_solution.csv  | 92,404        |
 | com-orkut.ungraph.csv       | com-orkut.ungraph_solution.csv       | 1,461,419     |
+
+## IV. Enhancing Results by Searching and Converting Augmenting Paths
+
+## V. Augmenting Path Enhancement Results
+
+## VI. Conclusion
+
+## References
 
 ***
 ### Objectives
