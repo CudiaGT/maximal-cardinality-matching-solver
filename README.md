@@ -30,8 +30,8 @@ The hybrid algorithm designed for this project utilizes the advantages of Israel
 ### Analysis
 | Algorithm              | Time-Complexity  | Space-Complexity | Scalability            | Parellelization |
 | ---------------------- | ---------------- | ---------------- | ---------------------- | --------------- |
-| Israeli-Itai           | O(E) * k         | O(V + E)         | Yes                    | Yes             |
-| Greedy Random Matching | O(E') * l        | O(V + E')        | Yes (when E' is small) | No              |
+| Israeli-Itai           | O(E) $\times$ k  | O(V + E)         | Yes                    | Yes             |
+| Greedy Random Matching | O(E') $\times$ l | O(V + E')        | Yes (when E' is small) | No              |
 | Augmenting Path        | O(E + plog(p)    | O(m + n + p)     | Yes                    | Yes             |
 
 Legend:
@@ -45,7 +45,7 @@ p = Number of Augmenting Paths FOUND
 ### Advantages
 | Algorithm              | Scalable | Parallelizable | Matching Chance* |
 | ---------------------- | -------- | -------------- | ---------------- |
-| Israeli-Itai           | Yes      | Yes            | 1/d \* 1/4       |
+| Israeli-Itai           | Yes      | Yes            | 1/d $\times$ 1/4 |
 | Greedy Random Matching | No       | No             | 1/d              |
 | Hybrid Algorithm       | Yes      | Yes            | 25%-100%**       |
 
