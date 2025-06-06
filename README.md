@@ -49,7 +49,7 @@ p = Number of Augmenting Paths FOUND
 | Greedy Random Matching | No       | No             | 1/d                       |
 | Hybrid Algorithm       | Yes      | Yes            | 1/d or 1/d $\times$ 1/4** |
 
-\* Chance of a given vertex being eliminated 
+\* Chance of a given vertex being eliminated </br>
 ** Depending on how sparce the remaining vertices are (zeroStreak)
 
 The Israeli-Itai + Greedy Random Matching Algorithm has time-complexity of O(E * k) and O(E' * l). For Israeli-Itai, the algorithm is parallelizable as it utilizes RDD through Spark, while Greedy Random Matching is not. This is due to the how the Greedy Random Matching makes the decisions for forming a match, and it cannot be parallelized. However, both algorithms are deemed scalable, as the entire algorithm is expected to only fall back to Greedy Random Matching when E' is significantly smaller than E, allowing the computational complexity to be drastically reduced at the point of fallback. Regarding the space complexity, the initial loading of the edges take up O(m) space, and the broadcasts including activeVertices (remaining vertices), vertexBits (randomly assigned bits), and confirmedMatches (list of matches made in a given iteration) take up O(n) space. However, regarding the intermediate results and groupings of edges, they are programmed to be recorded directly at the hard drive, limiting the coefficient of O(m) from growing unmanageably large.
