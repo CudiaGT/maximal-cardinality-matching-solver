@@ -20,15 +20,15 @@ The hybrid algorithm designed for this project utilizes the advantages of Israel
 | com-orkut.ungraph.csv       | 117,185,083     |
 
 ### Results
-| File Name                   | Matching Size | Approach              | Runtime (Local) | Runtime (GCP 4x2 Cores) | # of Iteration (+ # of Greedy Iteration) |
-| --------------------------- | ------------- | --------------------- | --------------- | ----------------------- | ---------------------------------------- |
-| soc-pokec-relationships.csv | 599,530       | Israeli-Itai + Greedy | 7m 57s          | 10m 36s                 | 40 + 2                                   |
-| soc-LiveJournal1            | 1,578,566     | Israeli-Itai + Greedy | 16m 37m         | 20m 7s                  | 42 + 2                                   |
-| twitter_original_edges      | 92,404        | Israeli-Itai + Greedy | 20m 40s         | 38m 16s                 | 27 + 0                                   |
-| com-orkut.ungraph.csv       | 1,339,741     | Israeli-Itai + Greedy | 38m 10s         | 40m 43s                 | 42 + 3                                   |
+| File Name                   | Matching Size | Approach              | Runtime (Local) | Runtime (GCP 4x2 Cores) | Iterations (+ Greedy) |
+| --------------------------- | ------------- | --------------------- | --------------- | ----------------------- | --------------------- |
+| soc-pokec-relationships.csv | 599,530       | Israeli-Itai + Greedy | 7m 57s          | 10m 36s                 | 40 + 2                |
+| soc-LiveJournal1            | 1,578,566     | Israeli-Itai + Greedy | 16m 37m         | 20m 7s                  | 42 + 2                |
+| twitter_original_edges      | 92,404        | Israeli-Itai + Greedy | 20m 40s         | 38m 16s                 | 27 + 0                |
+| com-orkut.ungraph.csv       | 1,339,741     | Israeli-Itai + Greedy | 38m 10s         | 40m 43s                 | 42 + 3                |
 
-
-| Algorithm Name         | Time-Complexity  | Space-Complexity | Scalability            | Parellelization |
+### Analysis
+| Algorithm              | Time-Complexity  | Space-Complexity | Scalability            | Parellelization |
 | ---------------------- | ---------------- | ---------------- | ---------------------- | --------------- |
 | Israeli-Itai           | O(E) * k         | O(V + E)         | Yes                    | Yes             |
 | Greedy Random Matching | O(E') * l        | O(V + E')        | Yes (when E' is small) | No              |
@@ -41,6 +41,16 @@ E = Number of Edges
 k = Number of Israeli-Itai Iterations
 l = Number of Greedy Random Matching Iterations
 p = Number of Augmenting Paths FOUND
+
+### Advantages
+| Algorithm              | Scalable | Parallelizable | Matching Chance* |
+| ---------------------- | -------- | -------------- | ---------------- |
+| Israeli-Itai           | Yes      | Yes            | 25%              |
+| Greedy Random Matching | No       | No             | 100%             |
+| Hybrid Algorithm       | Yes      | Yes            | 25%-100%**       |
+
+*
+**
 
 The Israeli-Itai + Greedy Random Matching Algorithm has time-complexity of O(E * k) and O(E' * l). For Israeli-Itai, the algorithm is parallelizable as it utilizes RDD through Spark, while Greedy Random Matching is not. This is due to the how the Greedy Random Matching makes the decisions for forming a match, and it cannot be parallelized. However, both algorithms are deemed scalable, as the entire algorithm is expected to only fall back to Greedy Random Matching when E' is significantly smaller than E, allowing the computational complexity to be drastically reduced at the point of fallback. Regarding the space complexity, the initial loading of the edges take up O(m) space, and the broadcasts including activeVertices (remaining vertices), vertexBits (randomly assigned bits), and confirmedMatches (list of matches made in a given iteration) take up O(n) space. However, regarding the intermediate results and groupings of edges, they are programmed to be recorded directly at the hard drive, limiting the coefficient of O(m) from growing unmanageably large.
 
