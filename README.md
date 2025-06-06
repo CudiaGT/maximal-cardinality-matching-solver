@@ -8,6 +8,7 @@ Keywords -- Maximal Cardinality Matching, Israeli-Itai, Greedy Random Matching, 
 The Israeli-Itai algorithm is an effective and scalable algorithm in forming a valid matched set in large-scale data, as it utilizes parallel message exchange among vertices. However, when implemented, there exists a discrepancy between the theoretical and empirical time-complexity due to how the algorithm determines which of the proposals will be accepted (generating random bits and breaking symmetry). To investigate this problem further, the Israeli-Itai algorithm was implemented to produce output files after each iteration, showing how many edges were added to the matched set in the given iteration.
 
 ## II. Hybrid Algorithm Utilizing Fallback to Greedy Random Matching
+The hybrid algorithm designed for this project utilizes the advantages of Israeli-Itai algorithm and Greedy Random Matching. When the algorithm is executed, the Israeli-Itai algorithm is applied to the graph, creating proposals and forming a matched set through iteration. After a certain number of iterations (depending on the density and the degree of the graph), the graph will reach a point where Israeli-Itai algorithm begins to perform iterations in which there are no additional matches added to the set. Whenever this occurs, the zeroStreak value in incremented by one. When the zeroStreak reaches the threshold value (arbitrarily decided to be 3 in this repository), the program performs a fallback to Greedy Random Matching algorithm, forming matches among the remaining edges and vertices in a greedy manner.
 
 ## III. Maximal Cardinality Matching Results & Analysis
 ### Input Data
@@ -18,12 +19,14 @@ The Israeli-Itai algorithm is an effective and scalable algorithm in forming a v
 | twitter_original_edges.csv  | 63,555,749      |
 | com-orkut.ungraph.csv       | 117,185,083     |
 
-| File Name                   | Matching Size | Approach              | Runtime (Local) | Iteration (+ Greedy) | Runtime (GCP 4x2 Cores) |
-| --------------------------- | ------------- | --------------------- | --------------- | -------------------- | ----------------------- |
-| soc-pokec-relationships.csv | 599,530       | Israeli-Itai + Greedy | 7m 57s          | 40 + 2               | 10m 36s                 |
-| soc-LiveJournal1            | 1,578,566     | Israeli-Itai + Greedy | 16m 37m         | 42 + 2               | 20m 7s                  |
-| twitter_original_edges      | 92,404        | Israeli-Itai + Greedy | 20m 40s         | 27 + 0               | 38m 16s                 |
-| com-orkut.ungraph.csv       | 1,339,741     | Israeli-Itai + Greedy | 38m 10s         | 42 + 3               | 40m 43s                 |
+### Results
+| File Name                   | Matching Size | Approach              | Runtime (Local) | Runtime (GCP 4x2 Cores) | # of Iteration (+ # of Greedy Iteration) |
+| --------------------------- | ------------- | --------------------- | --------------- | ----------------------- | ---------------------------------------- |
+| soc-pokec-relationships.csv | 599,530       | Israeli-Itai + Greedy | 7m 57s          | 10m 36s                 | 40 + 2                                   |
+| soc-LiveJournal1            | 1,578,566     | Israeli-Itai + Greedy | 16m 37m         | 20m 7s                  | 42 + 2                                   |
+| twitter_original_edges      | 92,404        | Israeli-Itai + Greedy | 20m 40s         | 38m 16s                 | 27 + 0                                   |
+| com-orkut.ungraph.csv       | 1,339,741     | Israeli-Itai + Greedy | 38m 10s         | 40m 43s                 | 42 + 3                                   |
+
 
 | Algorithm Name         | Time-Complexity  | Space-Complexity | Scalability            | Parellelization |
 | ---------------------- | ---------------- | ---------------- | ---------------------- | --------------- |
