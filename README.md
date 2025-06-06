@@ -52,13 +52,8 @@ p = Number of Augmenting Paths FOUND
 \* Chance of a given vertex being eliminated </br>
 ** Depending on how sparce the remaining vertices are (zeroStreak)
 
-The Israeli-Itai + Greedy Random Matching Algorithm has time-complexity of O(E * k) and O(E' * l). For Israeli-Itai, the algorithm is parallelizable as it utilizes RDD through Spark, while Greedy Random Matching is not. This is due to the how the Greedy Random Matching makes the decisions for forming a match, and it cannot be parallelized. However, both algorithms are deemed scalable, as the entire algorithm is expected to only fall back to Greedy Random Matching when E' is significantly smaller than E, allowing the computational complexity to be drastically reduced at the point of fallback. Regarding the space complexity, the initial loading of the edges take up O(m) space, and the broadcasts including activeVertices (remaining vertices), vertexBits (randomly assigned bits), and confirmedMatches (list of matches made in a given iteration) take up O(n) space. However, regarding the intermediate results and groupings of edges, they are programmed to be recorded directly at the hard drive, limiting the coefficient of O(m) from growing unmanageably large.
-
-The algorithm to find augmenting path has time-complexity of O(E + plog(p)). This is because the comparison between the original edges and the matched set consumes O(m) time, and the shuffling process incorporated in resolving conflicts for overlapping augmenting paths requires O(plog(p) time. Though the algorithm mostly consists of map functions and are generally parallizable in the way it is programmed in Scala, there are two main bottlenecks that make this algorithm far from fully efficient.
-
-First challenge is how the algorithm resolves conflicts among found augmenting paths through groupByKey, which is parallelizable and scalable, but cannot guarantee realistic runtime regardless of the input size. Secondly, rising from the first issue and the usage of collect() and broadcast(), the algorithm may not be considered fully scalable or cost-efficient considering its limitations in finding augmenting paths per iteration. In other words, although the algorithm is scalable, parallelizable, and relatively efficient, in graphs larger than com-orkut.ungraph.csv, it may be unreasonable to pay the amount of time and computing power thing algorithm requires to simply find "some" of the length 3 augmenting paths that exist in the current matched set.
-
 ## IV. Enhancing Results by Searching and Converting Augmenting Paths
+
 
 ## V. Augmenting Path Enhancement Results & Analysis
 
