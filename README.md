@@ -53,7 +53,7 @@ p = Number of Augmenting Paths FOUND
 ** Depending on how sparce the remaining vertices are (zeroStreak)
 
 ## IV. Enhancing Results by Searching and Converting Augmenting Paths
-
+As the goal to design and implement an algorithm that can efficiently create a maximal matched set had been accomplished, the next step was to improve the results (enlarging the size of the matched set) by searching and converting augmenting paths. The presented algorithm stored in "augmenting_path_improver.scala" searches for augmenting paths of length 3 at parallel in each iteration, and resolves any conflict through randomly assigning hash values to the found augmenting paths and incorporating them in order of priority.
 
 ## V. Augmenting Path Enhancement Results & Analysis
 
@@ -64,18 +64,16 @@ p = Number of Augmenting Paths FOUND
 | twitter_original_edges      | 92,404            | N/A               | N/A                  | N/A                   |
 | com-orkut.ungraph.csv       | 1,339,741         | 1,363,212         | 1,461,419 (10)       | 5-7 minutes           |
 
-| Input File Name             | Number of Edges | Matching Size |
-| --------------------------- | --------------- | ------------- |
-| soc-pokec-relationships.csv | 22,301,964      | 703,095       |
-| soc-LiveJournal1.csv        | 42,851,237      | 1,890,074     |
-| twitter_original_edges.csv  | 63,555,749      | 92,404        |
-| com-orkut.ungraph.csv       | 117,185,083     | 1,461,419     |
+| Input File Name             | Number of Edges | Originial Matching Size | Improved Matching Size | % Change of Size |
+| --------------------------- | --------------- | ----------------------- | ---------------------- | ---------------- |
+| soc-pokec-relationships.csv | 22,301,964      | 599,530                 | 703,095                | 17.27% Increase  |
+| soc-LiveJournal1.csv        | 42,851,237      | 1,578,566               | 1,890,074              | 19.73% Increase  |
+| twitter_original_edges.csv  | 63,555,749      | 92,404                  | 92,404                 | No Change        |
+| com-orkut.ungraph.csv       | 117,185,083     | 1,339,741               | 1,461,419              | 9.08% Increase   |
 
-After 2-3 repeated trials on each of the larger samples to test for robustness and precision of the output, it was concluded that the Israeli-Itai Algorithm had been implemented corrected. To improve the results, an attempt to identify and flip the augmenting paths was implemented.
+As shown in the data above, the enhanced matched sets showed meaningful increases in size compared to the original matchings.
 
-As searching for augmenting paths are non-trivial, the initial approach was to fully abandon parallelization and implement an algorithm that searchs every augmenting path of a given length (n), by providing a scenario in which n edges are augmenting paths. In other words, the program was to iterate through the nodes and find a condition in which 0-1 are not matched, 1-2 are matched, 2-3 are not matched, and so on. However, through Profession Su's suggestion, it was deemed better to simultaneously search for some of the augmenting paths instead of iteratively finding all of them, as the prior algorithm had significantly faster runtime than the latter, and the advantages of finding "all" augmenting paths of length n was not beneficial enough relative to the computing power that it required.
-
-Therefore, an alternative algorithm (augmenting_path_improver.scala) was implemented, searching for augmenting paths of length 3 at parallel at each iteration, and resolving conflicts when they occur. With the exception of twitter_original_edges.csv, each graph was run through the augmenting path algorithm once to record data, and then was run through multiple iterations until the improvements began to drastically reduce (less than 5,000 augmenting paths per iteration). In the case of twitter_original_edges.csv, due to the skewedness of the graph that led to vast numbers of conflicting augmenting paths that had to be stored and resolved, neither the local machine nor GCP was able to avoid running into Java Out of Memory Error.
+Nevertheless, the algorithm faced challenges in searching for augmenting paths in extremely skewed data such as the twitter_original_edges.csv, where it repeated ran into Java OutOfMemoryError, exceeding the 12 gigabytes of memory that was assigned to the execution of this program. Finally, although it does not relate to the limitations of the algorithm itself, but due to the nature of maximal matching problems and graph theory, it can also be seen that the auxiliary algorithm was more effective in increasing the matching size when the edges are relatively evenly distributed (soc-pokec-relationships.csv and soc-LiveJournal1.csv), than when the graph was overly dense or skewed (twitter_original_edges.csv and com-orkut.ungraph.csv).
 
 ## VI. Conclusion
 
