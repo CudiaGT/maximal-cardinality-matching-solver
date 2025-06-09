@@ -55,6 +55,8 @@ p = Number of Augmenting Paths FOUND
 ## IV. Enhancing Results by Searching and Converting Augmenting Paths
 As the goal to design and implement an algorithm that can efficiently create a maximal matched set had been accomplished, the next step was to improve the results (enlarging the size of the matched set) by searching and converting augmenting paths. The presented algorithm stored in "augmenting_path_improver.scala" searches for augmenting paths of length 3 at parallel in each iteration, and resolves any conflict through randomly assigning hash values to the found augmenting paths and incorporating them in order of priority.
 
+As the approximation bound from augmenting path length states that when the shortest augmenting paths have length &le; 2𝑘−1 => the current matching is at least (1−1/𝑘)⋅𝑂𝑃𝑇
+
 ## V. Augmenting Path Enhancement Results & Analysis
 ### Analysis of Theoretical Runtime
 | Algorithm              | Time-Complexity  | Space-Complexity | Scalability            | Parellelization |
