@@ -56,6 +56,12 @@ p = Number of Augmenting Paths FOUND
 As the goal to design and implement an algorithm that can efficiently create a maximal matched set had been accomplished, the next step was to improve the results (enlarging the size of the matched set) by searching and converting augmenting paths. The presented algorithm stored in "augmenting_path_improver.scala" searches for augmenting paths of length 3 at parallel in each iteration, and resolves any conflict through randomly assigning hash values to the found augmenting paths and incorporating them in order of priority.
 
 ## V. Augmenting Path Enhancement Results & Analysis
+### Analysis of Theoretical Runtime
+| Algorithm              | Time-Complexity  | Space-Complexity | Scalability            | Parellelization |
+| ---------------------- | ---------------- | ---------------- | ---------------------- | --------------- |
+| Augmenting Path        | O(E + plog(p)    | O(m + n + p)     | Yes                    | Yes             |
+
+### Results after Single Execution
 | File Name                   | Original Matching | After 1 Iteration | After (n) Iterations | Runtime per Iteration |
 | --------------------------- | ----------------- | ----------------- | -------------------- | --------------------- |
 | soc-pokec-relationships.csv | 599,530           | 623,483           | 703,095 (16)         | 1-2 minutes           |
@@ -63,6 +69,7 @@ As the goal to design and implement an algorithm that can efficiently create a m
 | twitter_original_edges      | 92,404            | N/A               | N/A                  | N/A                   |
 | com-orkut.ungraph.csv       | 1,339,741         | 1,363,212         | 1,461,419 (10)       | 5-7 minutes           |
 
+### Results after Iterative Executions
 | Input File Name             | Number of Edges | Originial Matching Size | Improved Matching Size | % Change of Size |
 | --------------------------- | --------------- | ----------------------- | ---------------------- | ---------------- |
 | soc-pokec-relationships.csv | 22,301,964      | 599,530                 | 703,095                | 17.27% Increase  |
@@ -70,13 +77,14 @@ As the goal to design and implement an algorithm that can efficiently create a m
 | twitter_original_edges.csv  | 63,555,749      | 92,404                  | 92,404                 | No Change        |
 | com-orkut.ungraph.csv       | 117,185,083     | 1,339,741               | 1,461,419              | 9.08% Increase   |
 
+###
+
 The enhancement algorithm was able to increase the matching size by 9-20 percent for most of the inputs. Nevertheless, the algorithm faced challenges in searching for augmenting paths in extremely skewed data such as the twitter_original_edges.csv, where it repeated ran into Java OutOfMemoryError, exceeding the 12 gigabytes of memory that was assigned to the execution of this program. Finally, although it does not relate to the limitations of the algorithm itself, but due to the nature of maximal matching problems and graph theory, it can also be seen that the auxiliary algorithm was more effective in increasing the matching size when the edges are relatively evenly distributed (soc-pokec-relationships.csv and soc-LiveJournal1.csv), than when the graph was overly dense or skewed (twitter_original_edges.csv and com-orkut.ungraph.csv).
 
 ## VI. Conclusion
+In conlcusion, this project was able to achieve two meaningful results: 1) designing and implementing a hybrid algorithm that utilizes Israeli-Itai algorithm for scalability and Greedy Random Matching algorithm for reducing unnecessary iterations, and 2) ensuring a 2/3-optimal size for the matched set by implementing an algorithm that searches and converts augmenting paths of length 3.
 
-There are several additional procedures that I would have carried out if I had more time and access to stronger computing power. The first is that I am unsure of the exact benefits of the fallback to the Greedy Random Matching Algorithm, as it came from a theoretical standpoint of observing later Israeli-Itai iteration results that showed very few matches or even no matches. Unlike my expectations, the 3-5 trials that I was able to carry out on the larger data (as smaller input would rarely have meaningful number of iterations to begin with), did not show noticeable differences in the total number of iterations nor the runtime.
-
-The second part that I would like to study and investigate further regards the augmenting paths. Due to the nature of the assignment, my primary goal in implementing and testing out the augmenting path algorithm was the boost the matching size of the solutions, and therefore, the approach the I took was to mainly boost soc-LiveJournal1.csv and com-orkut.ungraph.csv, as they had the largest room for improvements relative to percent change. Unfortunately, what I was unable to address due to this approach was what exact 1/ε-approximation I am reaching through the iterations of augmenting path algorithm, and if, at a certain point, it would be/would have been more beneficial to improve my original algorithm and implement one that searches for augmenting paths of length 5 or more. If I had almost run out of augmenting paths of length 3 after a certain number of iterations, for a large and relatively well distributed data such as soc-pokec-relationships.csv, or soc-LiveJournal1.csv it could have been better to implement such an algorithm for a larger increase in the size of the matched set. 
+For future improvements,
 
 ## References
 [1] Garrido, O., Jarominek, S., Lingas, A., Rytter, W. (1992). A simple randomized parallel algorithm for maximal f-matchings. In: Simon, I. (eds) LATIN '92. LATIN 1992. Lecture Notes in Computer Science, vol 583. Springer, Berlin, Heidelberg. https://doi.org/10.1007/BFb0023827 </br>
@@ -84,13 +92,11 @@ The second part that I would like to study and investigate further regards the a
 [3] Leonid Barenboim, Michael Elkin, Seth Pettie, and Johannes Schneider. 2016. The Locality of Distributed Symmetry Breaking. J. ACM 63, 3, Article 20 (September 2016), 45 pages. https://doi.org/10.1145/2903137
 
 ## Result Replication
-To replicate the results, each algorithm can be run in the following steps.  
-
-Large Input (other csv files)
-* Run "final_project.israeli-itai_matching" to produce initial matched set
-* Run "final_project.augmenting_path_improver" with desired number of iterations to matched sets with improved size
+To replicate the results, each algorithm can be run in the following steps.
 
 The matching verifier accepts 2 file paths as arguments, the first being the path to the file containing the initial graph and the second being the path to the file containing the matching. It can be ran locally with the following command (keep in mind that your file paths may be different):
+
+* Run "final_project.israeli-itai_matching" to produce initial matched set
 ```
 // Linux
 spark-submit --master local[*] --class final_project.matching_verifier target/scala-2.12/project_3_2.12-1.0.jar /data/log_normal_100.csv data/log_normal_100_matching.csv
@@ -98,15 +104,11 @@ spark-submit --master local[*] --class final_project.matching_verifier target/sc
 // Unix
 spark-submit --master "local[*]" --class "final_project.matching_verifier" target/scala-2.12/project_3_2.12-1.0.jar data/log_normal_100.csv data/log_normal_100_matching.csv
 ```
-
-### Correlation Clustering
-
-The clustering verifier accepts 2 file paths as arguments, the first being the path to the file containing the initial graph and the second being the path to the file describing the clustering. It can be ran locally with the following command (keep in mind that your file paths may be different):
+* Run "final_project.augmenting_path_improver" with desired number of iterations to matched sets with improved size
 ```
 // Linux
-spark-submit --master local[*] --class final_project.clustering_verifier target/scala-2.12/project_3_2.12-1.0.jar /data/log_normal_100.csv data/log_normal_100_clustering.csv
+spark-submit --master local[*] --class final_project.matching_verifier target/scala-2.12/project_3_2.12-1.0.jar /data/log_normal_100.csv data/log_normal_100_matching.csv
 
 // Unix
-spark-submit --master "local[*]" --class "final_project.clustering_verifier" target/scala-2.12/project_3_2.12-1.0.jar data/log_normal_100.csv data/log_normal_100_clustering.csv
-
+spark-submit --master "local[*]" --class "final_project.matching_verifier" target/scala-2.12/project_3_2.12-1.0.jar data/log_normal_100.csv data/log_normal_100_matching.csv
 ```
