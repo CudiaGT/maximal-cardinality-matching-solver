@@ -56,7 +56,6 @@ p = Number of Augmenting Paths FOUND
 As the goal to design and implement an algorithm that can efficiently create a maximal matched set had been accomplished, the next step was to improve the results (enlarging the size of the matched set) by searching and converting augmenting paths. The presented algorithm stored in "augmenting_path_improver.scala" searches for augmenting paths of length 3 at parallel in each iteration, and resolves any conflict through randomly assigning hash values to the found augmenting paths and incorporating them in order of priority.
 
 ## V. Augmenting Path Enhancement Results & Analysis
-
 | File Name                   | Original Matching | After 1 Iteration | After (n) Iterations | Runtime per Iteration |
 | --------------------------- | ----------------- | ----------------- | -------------------- | --------------------- |
 | soc-pokec-relationships.csv | 599,530           | 623,483           | 703,095 (16)         | 1-2 minutes           |
@@ -71,9 +70,7 @@ As the goal to design and implement an algorithm that can efficiently create a m
 | twitter_original_edges.csv  | 63,555,749      | 92,404                  | 92,404                 | No Change        |
 | com-orkut.ungraph.csv       | 117,185,083     | 1,339,741               | 1,461,419              | 9.08% Increase   |
 
-As shown in the data above, the enhanced matched sets showed meaningful increases in size compared to the original matchings.
-
-Nevertheless, the algorithm faced challenges in searching for augmenting paths in extremely skewed data such as the twitter_original_edges.csv, where it repeated ran into Java OutOfMemoryError, exceeding the 12 gigabytes of memory that was assigned to the execution of this program. Finally, although it does not relate to the limitations of the algorithm itself, but due to the nature of maximal matching problems and graph theory, it can also be seen that the auxiliary algorithm was more effective in increasing the matching size when the edges are relatively evenly distributed (soc-pokec-relationships.csv and soc-LiveJournal1.csv), than when the graph was overly dense or skewed (twitter_original_edges.csv and com-orkut.ungraph.csv).
+The enhancement algorithm was able to increase the matching size by 9-20 percent for most of the inputs. Nevertheless, the algorithm faced challenges in searching for augmenting paths in extremely skewed data such as the twitter_original_edges.csv, where it repeated ran into Java OutOfMemoryError, exceeding the 12 gigabytes of memory that was assigned to the execution of this program. Finally, although it does not relate to the limitations of the algorithm itself, but due to the nature of maximal matching problems and graph theory, it can also be seen that the auxiliary algorithm was more effective in increasing the matching size when the edges are relatively evenly distributed (soc-pokec-relationships.csv and soc-LiveJournal1.csv), than when the graph was overly dense or skewed (twitter_original_edges.csv and com-orkut.ungraph.csv).
 
 ## VI. Conclusion
 
