@@ -101,16 +101,33 @@ The matching verifier accepts 2 file paths as arguments, the first being the pat
 * Run "final_project.israeli-itai_matching" to produce initial matched set
 ```
 // Linux
-spark-submit --master local[*] --class final_project.matching_verifier target/scala-2.12/project_3_2.12-1.0.jar /data/log_normal_100.csv data/log_normal_100_matching.csv
+spark-submit --master local[*] \
+  --driver-memory 8G \
+  --class final_project.matching_verifier \
+  target/scala-2.12/project_3_2.12-1.0.jar \
+  /data/log_normal_100.csv data/log_normal_100_matching.csv
 
 // Unix
-spark-submit --master "local[*]" --class "final_project.matching_verifier" target/scala-2.12/project_3_2.12-1.0.jar data/log_normal_100.csv data/log_normal_100_matching.csv
+spark-submit --master "local[*]" \
+  --driver-memory 8G \
+  --class final_project.matching_verifier \
+  target/scala-2.12/project_3_2.12-1.0.jar \
+  /data/log_normal_100.csv data/log_normal_100_matching.csv
 ```
+
 * Run "final_project.augmenting_path_improver" with desired number of iterations to matched sets with improved size
 ```
 // Linux
-spark-submit --master local[*] --class final_project.matching_verifier target/scala-2.12/project_3_2.12-1.0.jar /data/log_normal_100.csv data/log_normal_100_matching.csv
+spark-submit --master local[*] \
+  --driver-memory 8G \
+  --class final_project.matching_verifier \
+  target/scala-2.12/project_3_2.12-1.0.jar \
+  /data/log_normal_100.csv data/log_normal_100_matching.csv
 
 // Unix
-spark-submit --master "local[*]" --class "final_project.matching_verifier" target/scala-2.12/project_3_2.12-1.0.jar data/log_normal_100.csv data/log_normal_100_matching.csv
+spark-submit --master "local[*]" \
+  --driver-memory 8G \
+  --class final_project.matching_verifier \
+  target/scala-2.12/project_3_2.12-1.0.jar \
+  /data/log_normal_100.csv data/log_normal_100_matching.csv
 ```
