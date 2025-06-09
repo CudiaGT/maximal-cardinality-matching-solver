@@ -96,38 +96,72 @@ For future improvements, the focus would on empirical analysis of the benefits o
 ## Result Replication
 To replicate the results, each algorithm can be run in the following steps.
 
-The matching verifier accepts 2 file paths as arguments, the first being the path to the file containing the initial graph and the second being the path to the file containing the matching. It can be ran locally with the following command (keep in mind that your file paths may be different):
-
-* Run "final_project.israeli-itai_matching" to produce initial matched set
+The matching algorithm (Israeli-Itai + Greedy Random Matching) accepts 2 file paths as arguments, the first being the path to the file containing the input graph and the second being the path to save the output file, or files if the graph requires multiple iterations.
+* The memory allocation for the driver for this program is set to be 12 gigabytes, due to its computational complexity
+* To run "final_project.matching_algorithm.scala" to produce the initial matched set,
 ```
 // Linux
 spark-submit --master local[*] \
   --driver-memory 8G \
-  --class final_project.matching_verifier \
+  --class final_project.israeli_itai_matching \
   target/scala-2.12/project_3_2.12-1.0.jar \
-  /data/log_normal_100.csv data/log_normal_100_matching.csv
+  /path/to/input path/to/output
 
 // Unix
 spark-submit --master "local[*]" \
   --driver-memory 8G \
-  --class final_project.matching_verifier \
+  --class final_project.israeli_itai_matching \
   target/scala-2.12/project_3_2.12-1.0.jar \
-  /data/log_normal_100.csv data/log_normal_100_matching.csv
+  /path/to/input path/to/output
 ```
 
-* Run "final_project.augmenting_path_improver" with desired number of iterations to matched sets with improved size
+If the input file contains a graph that requires multiple iterations, the output directory may consist of multiple output files. To merge the output files into one, the output merger is implemented. This algorithm takes in 2 file paths as input, the first one being the path to directory containing the output files, and the second path as the destination for the merged files.
+* To run "final_project.output_merger.scala" to merge the output files into one,
 ```
 // Linux
 spark-submit --master local[*] \
-  --driver-memory 8G \
-  --class final_project.matching_verifier \
+  --class final_project.merge_output \
   target/scala-2.12/project_3_2.12-1.0.jar \
-  /data/log_normal_100.csv data/log_normal_100_matching.csv
+  /path/to/input path/to/output
 
 // Unix
 spark-submit --master "local[*]" \
-  --driver-memory 8G \
-  --class final_project.matching_verifier \
+  --class final_project.merge_output \
   target/scala-2.12/project_3_2.12-1.0.jar \
-  /data/log_normal_100.csv data/log_normal_100_matching.csv
+  /path/to/input path/to/output
+```
+
+The matching verifier accepts 2 file paths as arguments, verifying whether the file at the second input path is a valid matching of the file from the first input path.
+* To run "final_project.matching_verifier.scala" to check for validity of the initial matched set,
+```
+// Linux
+spark-submit --master local[*] \
+  --class final_project.verifier \
+  target/scala-2.12/project_3_2.12-1.0.jar \
+  /path/to/input path/to/output
+
+// Unix
+spark-submit --master "local[*]" \
+  --class final_project.verifier \
+  target/scala-2.12/project_3_2.12-1.0.jar \
+  /path/to/input path/to/output
+```
+
+Finally, the augmenting path improver takes in three inputs. First input is the file path to the current matched set, second input is the file path for the enhanced results to be stored, and third input for the user to select the maximum number of iterations in searching for the augmenting paths. The algorithm will exit before it reaches the maximum number of iterations if there are no more augmenting paths with length 3 to convert.
+* The memory allocation for the driver for this program is set to be 12 gigabytes, due to its computational complexity
+* To run "final_project.augmenting_path_improver.scala" to improve the size of the matched set,
+```
+// Linux
+spark-submit --master local[*] \
+  --driver-memory 12G \
+  --class final_project.augmenting_path_improver \
+  target/scala-2.12/project_3_2.12-1.0.jar \
+  /path/to/input path/to/output max_iterations
+
+// Unix
+spark-submit --master "local[*]" \
+  --driver-memory 12G \
+  --class final_project.augmenting_path_improver \
+  target/scala-2.12/project_3_2.12-1.0.jar \
+  /path/to/input path/to/output max_iterations
 ```
