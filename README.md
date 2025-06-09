@@ -86,7 +86,7 @@ The enhancement algorithm was able to increase the matching size by 9-20 percent
 ## VI. Conclusion
 In conlcusion, this project was able to achieve two meaningful results: 1) designing and implementing a hybrid algorithm that utilizes Israeli-Itai algorithm for scalability and Greedy Random Matching algorithm for reducing unnecessary iterations, and 2) ensuring a 2/3-optimal size for the matched set by implementing an algorithm that searches and converts augmenting paths of length 3.
 
-For future improvements,
+For future improvements, the focus would on empirical analysis of the benefits of fallback to Greedy Random Matching algorithm, providing numbers that can show its advantages compared to simply utilizing the Israeli-Itai algorithm. Secondly, implementation of dynamic component to the augmenting path enhancement algorithm, allowing the user to select the length of the augmenting path in which they would like to search and convert, providing the user with the freedom to select how much runtime they are willing to give up in return of the larger resulting matched set.
 
 ## References
 [1] Garrido, O., Jarominek, S., Lingas, A., Rytter, W. (1992). A simple randomized parallel algorithm for maximal f-matchings. In: Simon, I. (eds) LATIN '92. LATIN 1992. Lecture Notes in Computer Science, vol 583. Springer, Berlin, Heidelberg. https://doi.org/10.1007/BFb0023827 </br>
